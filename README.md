@@ -161,5 +161,5 @@ List the technical debt in an explicit way. This is not a list of items in backl
 - [ ] 419, 403, 201 responses in X Methods 
 
 
-See our guidelines about code documentation
+See our guidelines about code documentation https://github.com/pablogottifredi/doc-example/blob/main/code-documentaton-guideline.md
 
