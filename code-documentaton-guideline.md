@@ -57,8 +57,7 @@ Do you have the entirely CI process solved? OK, the terraform (or another recipe
 If you have the CI uncompleted and need some process manually (especially in database migrations), include a deployment document instruction with any manual step that the DevOps must run to install and include changes in the project.
 
 ## 6. Readme in each project
-Follow the template of (readme) 
-[https://github.com/pablogottifredi/doc-example/blob/main/README.md] and include it in each project.
+Follow the template of (readme)[https://github.com/pablogottifredi/doc-example/blob/main/README.md] and include it in each project.
 
 
 # Best Practices
