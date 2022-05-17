@@ -29,7 +29,7 @@ The usefull entris for the api documentation are:
 - Schemas
     - A list of any schema referenced in the documentation, to help to dev tools desing models, mocks and clients automatically. E.g. https://github.com/OpenAPITools/openapi-generator
 
-Yo can see an example here
+Yo can see an example here https://github.com/pablogottifredi/doc-example/blob/main/openapi.example.json
 
 Do you use automatic openapi generator? You can complete the fields
 
@@ -53,20 +53,8 @@ You have the CI uncompleted and need some process manually (specially in databas
 
 
 
+## Best Practices
+Keep it simple and concies. DRy (Don't repeat yourself)
+The best practices recomends that you use English, but, if the times presses use your native language and ask for help to translate it in the next sprint. Is more important the existence of documentation before the shakespearean prose
 
-
-
-
-
-
-
-
-
-
-
-
-    Keep it simple and concise. Follow the DRY (Don’t Repeat Yourself) principle. You don’t need to comment on every single line of your code, use comments to explain something that really needs explaining and is not self-evident.
-    Keep it up to date at all times. It’s best to document the code step by step, as it is written, instead of writing down the comments for the code that was written months ago. In doing so, you will save time and make the documentation precise and complete. Use proper versioning to keep track of all changes in the document.
-    Document any changes to your code. Documenting new features or add-ons is pretty obvious. However, you should also document deprecated features, capturing any change in the product.
-    Use simple language and proper formatting. Code documents are typically written in English so that any developer could read the comments, regardless of their native language. The best practices for documentation writing require using the Imperative mood, Present tenses, preferably active voice, and second person. Use consistent header, footer, headings, and font sizes for better readability.
-    Combine automated documentation tools and human input. Automation will speed up the process, but a person can make the code documentation comprehensible while adding more of a personal touch.
+Is you don't use any special platform to make the driagram, we recomends us diagram https://app.diagrams.net/ and provide the source file or if you are a warrior you can use the mermaid markdown support and include it in a md file https://github.blog/2022-02-14-include-diagrams-markdown-files-mermaid/
