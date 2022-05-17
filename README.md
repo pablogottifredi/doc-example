@@ -12,10 +12,10 @@ Describe a list of services dependencies needed to run the project, their versio
 You must think that the developer have their own version of services, OS and tools and needs mounts a new environment according the dependencies described here.
 This section does not include package.json 
 
-- (Docker compose version 3.8 or upper)[https://docs.docker.com/compose/compose-file/compose-versioning/]
-- (NodeJS v18)[https://nodejs.org/es/about/releases/]
-- (Python 3.9)[https://www.python.org/downloads/[
-- (Anaconda (CUDA needed))[https://www.anaconda.com/]
+- [Docker compose version 3.8 or upper](https://docs.docker.com/compose/compose-file/compose-versioning/)
+- [NodeJS v18)(https://nodejs.org/es/about/releases/)
+- [Python 3.9)(https://www.python.org/downloads/)
+- [Anaconda CUDA needed](https://www.anaconda.com/)
 - New Relic account
 
 Be explicit, this list is used by the DevOps/DevSecOps teams to approve/reject a deploy in controlled infrastructure.
