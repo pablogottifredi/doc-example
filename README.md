@@ -1,32 +1,38 @@
+
 # Purpose
-### Doc example requerements
-The current documents represents an example to a minimal documentation needed over each project develooped and looks a complete specification of Dependencies, undestand the needed configuration to Build, Relase and Run and provide a verificable mecanish to mount a development environment, fully runnable in a localhost environment
+### Doc example requirements
+The current document represents an example of the minimal documentation needed over each project developed and looks a complete specification of Dependencies, understands the needed configuration to Build, Release and Run and provides a verifiable mechanism to mount a development environment, fully runnable in a localhost environment
 
 # Project Name - Code Name if Exists
-Shown in this section a description of module, specially attention to describe the scope of domain. Include a short description of their functionallity. You can use short descriptions with the name of the pattern that represents or if a common piece of arquitecture. E.g: Credential Federator facade over Google Firebase.
-When you use a custom implementation to solve a piece of domain, please indicate that. E.g. Custom chat over mongo based in XMPP protocol or Custom OAuth2 implementation
+Shown in this section is a description of the module, with special attention to describing the scope of the domain. Include a short description of their functionality. 
+You can use short descriptions with the name of the pattern that represents or, if a common piece of architecture. E.g: Credential Federator facade over Google Firebase.
+When you use a custom implementation to solve a piece of the domain, please indicate that. 
+E.g. Custom chat over mongo based on XMPP protocol or Custom OAuth2 implementation
+
 
 ## Getting Started
 ### Dependencies
-Describe a list of services dependencies needed to run the project, their version and the source from you obtain the pieces.
-You must think that the developer have their own version of services, OS and tools and needs mounts a new environment according the dependencies described here.
+Describe a list of service dependencies needed to run the project, their version, and the source from which you obtain the pieces.
+You must think that the developer has their own version of services, OS, and tools and needs mounts a new environment according to the dependencies described here.
 This section does not include package.json 
 
 - [Docker compose version 3.8 or upper](https://docs.docker.com/compose/compose-file/compose-versioning/)
-- [NodeJS v18)(https://nodejs.org/es/about/releases/)
-- [Python 3.9)(https://www.python.org/downloads/)
+- [NodeJS v18](https://nodejs.org/es/about/releases/)
+- [Python 3.9](https://www.python.org/downloads/)
 - [Anaconda CUDA needed](https://www.anaconda.com/)
 - New Relic account
 
-Be explicit, this list is used by the DevOps/DevSecOps teams to approve/reject a deploy in controlled infrastructure.
-The sense if that a guys, could mount the entire project witout any other assitance that this list
+Be explicit, this list is used by the DevOps/DevSecOps teams to approve/reject a deployment in controlled infrastructure.
+The sense is the infra guys could mount the entire project without any other assistance that this list
 
 ### About the infrastructure
 Do you have backing services to run entirelly this project? Explain it here (a list is enought)
 - API Services based on NodeJS, containerized into a node:12.7-alpine
-- AWS S3 cdn storage, mocked in the container 
+- AWS S3 cdn storage, mocked in the container https://hub.docker.com/r/localstack/localstack
 - MySQL database based on  official container
 - A reverse proxy based on a nginx lastet version from docker hub
+
+Do you have services in other repositories? Linked and listed here. Is important to know the services dependencies to each piece
 
 If you have a diagram, you could link the file here
 
@@ -34,7 +40,8 @@ If you have a diagram, you could link the file here
 ### Setup
 Be explicit, step by step, and ensure in your local environment that the instructions could be replicate.
 Thinks that this steps must be executed by a devops that is not informed about languages, default setups or any config that there are not explicitally explained here
-An example below
+
+An example below (points 1 to 7, includes your own list)
 
 #### 1. Config environment
 
@@ -77,7 +84,7 @@ or make a GET using curl
 $ curl -G http://localhost:9001/project/
 ```
 
-5.1 Health check
+##### 5.1 Health check
 ```
 ** Front **
 $ curl -G http://localhost:9001/project/
@@ -85,7 +92,7 @@ $ curl -G http://localhost:9001/project/
 ** API
 $ curl -G http://localhost:9001/api/healthcheck.php
 
-** API + BD Connect (select an id item from accidents table)
+** API + BD Connect (select an id item from X table)
 $ curl -G http://localhost:9001/api/item?id=<a guid uid>>
 
 ** S3 Helper
@@ -98,7 +105,7 @@ $ curl -G http://localhost:9001/healthcheck
 $ curl -G http://localhost:8000
 ```
 
-6. Check if your bucket exists or create
+#### 6. Check if your bucket exists or create
 This first version haven't enought control about unexpected errors over infra.
 You need a bucket created over mock to put (upload) files
 Use mock-helper to create it. The bucket used is <>
@@ -109,20 +116,20 @@ $ curl -X POST http://localhost:9001/s3helper/buckets/create?bucket=bucket proje
 $ curl -X GET http://localhost:9001/s3helper/buckets/list
 ```
 
-#### 6. Run a test
+#### 7. Run a test
 Over the folder .... runs XXX, that contains a batery of test with the happy path
 ```
 $ npm test
 ```
 
 ### Environment values reference
-In this section describe each environment value, even when was depecreated
+In this section we describe each environment value, even when was depecreated
 Provide a .env.example (or similar) with the local environment configured
 
 Do you have services exclusivelly in the cloud?
 Don't upload in the local example the team credential (even if a dev team credential), but indicates in ENV config list that must config in mandatory way.
 
-This is an example, does not assume that the reader have info about the context
+This is an example, you should not assume that the reader have info about the context
 
 ``` 
 TAG: autogenerated valued by scripts
@@ -143,13 +150,16 @@ DB_ADMINER_PORT: mysql admin web based, accesible via browser without pass throu
 
 
 ## TO - DO
-List the technical debt in an explicit way. This is not a list of items in backlog, referes exclusivally to the knowed technical debt that culd have a problem to understand the real state of the project
+List the technical debt in an explicit way. This is not a list of items in backlog, referes exclusivally to the knowed technical debt that cuoul be a problem to understand the real state of the project
 
 - [ ] Stack environment with Authtentication filter
 - [ ] Unit test happy path
-- [ ] docker-compose.dev or local 
+- [ ] docker-compose.dev or local splited from production docker 
+- [ ] Dependencies unit test
 - [ ] New Relic or log monitor
 - [ ] Non-blocking function if X Services if not allowed
+- [ ] 419, 403, 201 responses in X Methods 
 
 
+See our guidelines about code documentation
 
