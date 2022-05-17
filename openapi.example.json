@@ -1,0 +1,889 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Friends Lessons - OpenAPI 3.0",
+    "description": "Sample according spec",
+    "contact": {
+      "email": "pablo.gottifredi@gmail.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "0.0.1"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3001"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Healthcheck",
+      "description": "Response if service is alive"
+    },
+    {
+      "name": "user",
+      "description": "Everything about Users"
+    },
+    {
+      "name": "lesson",
+      "description": "Everything about Lessons"
+    },
+    {
+      "name": "friendship",
+      "description": "Everything about Friendhip"
+    }
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "tags": [
+          "Healthcheck"
+        ],
+        "summary": "Heathcheck endpoint",
+        "responses": {
+          "200": {
+            "description": "I'm alive",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Healthcheck"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Get a list of user",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer"
+            },
+            "required": false,
+            "description": "Current page, if ommited use 0"
+          },
+          {
+            "in": "query",
+            "name": "pageSize",
+            "schema": {
+              "type": "integer"
+            },
+            "required": false,
+            "description": "Element per page, if ommited use 10"
+          },
+          {
+            "in": "query",
+            "name": "search",
+            "schema": {
+              "type": "string"
+            },
+            "required": false,
+            "description": "Look inside text fields"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Create a new user",
+        "requestBody": {
+          "description": "User in payload",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserRequestBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/{id}": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Get a user by id",
+        "parameters": [
+          {
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "name": "id",
+            "required": true,
+            "example": 1,
+            "description": "Id of user"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request. Some field in params or body have an invalid format",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/{id}/friend": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Get friends of certain user",
+        "parameters": [
+          {
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "name": "id",
+            "required": true,
+            "example": 1,
+            "description": "Id of user"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Add a friend to a user",
+        "parameters": [
+          {
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "name": "id",
+            "required": true,
+            "example": 1,
+            "description": "Id of friend"
+          }
+        ],
+        "requestBody": {
+          "description": "Friendship info",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserFriendshipRequestBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request. Some field in params or body have an invalid format",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable. There are preconditions in data sent not fulfilled",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal error without descriptiuon",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/{id}/lesson": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Get a list of lesson that a specific user has taken",
+        "parameters": [
+          {
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "name": "id",
+            "required": true,
+            "example": 1,
+            "description": "Id of user"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Lesson"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request. Some field in params or body have an invalid format",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Add a lesson to a user",
+        "parameters": [
+          {
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "name": "id",
+            "required": true,
+            "example": 1,
+            "description": "Id of user"
+          }
+        ],
+        "requestBody": {
+          "description": "Lesson info",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LessonUserRequestBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request. Some field in params or body have an invalid format",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable. There are preconditions in data sent not fulfilled",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal error without descriptiuon",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/lesson/{id}": {
+      "get": {
+        "tags": [
+          "lesson"
+        ],
+        "summary": "Get a user by id",
+        "parameters": [
+          {
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "name": "id",
+            "required": true,
+            "example": 1,
+            "description": "Id of user"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LessonRequestBody"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/lesson": {
+      "get": {
+        "tags": [
+          "lesson"
+        ],
+        "summary": "Get a list of lessons",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer"
+            },
+            "required": false,
+            "description": "Current page, if ommited use 0"
+          },
+          {
+            "in": "query",
+            "name": "pageSize",
+            "schema": {
+              "type": "integer"
+            },
+            "required": false,
+            "description": "Element per page, if ommited use 10"
+          },
+          {
+            "in": "query",
+            "name": "search",
+            "schema": {
+              "type": "string"
+            },
+            "required": false,
+            "description": "Look inside text fields"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Lesson"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "lesson"
+        ],
+        "summary": "Create a new lesson",
+        "requestBody": {
+          "description": "Lesson in payload",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LessonRequestBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/friendship": {
+      "get": {
+        "tags": [
+          "friendship"
+        ],
+        "summary": "Get a list of friendship registered",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer"
+            },
+            "required": false,
+            "description": "Current page, if ommited use 0"
+          },
+          {
+            "in": "query",
+            "name": "pageSize",
+            "schema": {
+              "type": "integer"
+            },
+            "required": false,
+            "description": "Element per page, if ommited use 10"
+          },
+          {
+            "in": "query",
+            "name": "search",
+            "schema": {
+              "type": "string"
+            },
+            "required": false,
+            "description": "Look inside text fields"
+          },
+          {
+            "in": "query",
+            "name": "from",
+            "schema": {
+              "type": "string"
+            },
+            "required": false,
+            "description": "A valid id of user"
+          },
+          {
+            "in": "query",
+            "name": "to",
+            "schema": {
+              "type": "string"
+            },
+            "required": false,
+            "description": "A valid id of user"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Friendship"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "friendship"
+        ],
+        "summary": "Create a new relation of friendship",
+        "requestBody": {
+          "description": "Friendship in payload",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FriendshipRequestBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity. Some data are wrong",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "example": "Jhon"
+          }
+        }
+      },
+      "UserRequestBody": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Jhon"
+          }
+        }
+      },
+      "UserFriendshipRequestBody": {
+        "type": "object",
+        "properties": {
+          "to": {
+            "type": "string",
+            "example": 1,
+            "description": "A valid user id"
+          }
+        }
+      },
+      "Lesson": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "example": "Lesson Name"
+          }
+        }
+      },
+      "LessonRequestBody": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Lesson Name"
+          }
+        }
+      },
+      "LessonUserRequestBody": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": 1,
+            "description": "A valid id of lesson"
+          }
+        }
+      },
+      "Friendship": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": 1
+          },
+          "from": {
+            "$ref": "#/components/schemas/User"
+          },
+          "to": {
+            "$ref": "#/components/schemas/User"
+          },
+          "requested": {
+            "type": "string",
+            "example": "2022-03-30T07:48:57+0000"
+          },
+          "accepted": {
+            "type": "string",
+            "example": "2022-03-30T07:48:57+0000"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "friend",
+              "follower"
+            ]
+          }
+        }
+      },
+      "FriendshipRequestBody": {
+        "type": "object",
+        "properties": {
+          "from": {
+            "type": "string",
+            "example": 1,
+            "description": "An existing user"
+          },
+          "to": {
+            "type": "string",
+            "example": 2,
+            "description": "An existing user"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "friend",
+              "follower"
+            ]
+          }
+        }
+      },
+      "APIResponse": {
+        "type": "object",
+        "required": [
+          "message"
+        ],
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "payload": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "Healthcheck": {
+        "properties": {
+          "uptime": {
+            "type": "number"
+          },
+          "message": {
+            "type": "string"
+          },
+          "environment": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "modak_auth": {
+        "type": "oauth2",
+        "flows": {
+          "implicit": {
+            "authorizationUrl": "https://nourlsolved.swagger.io/oauth/authorize",
+            "scopes": {
+              "write:pets": "modify pets in your account",
+              "read:pets": "read your pets"
+            }
+          }
+        }
+      },
+      "api_key": {
+        "type": "apiKey",
+        "name": "api_key",
+        "in": "header"
+      }
+    }
+  }
+}
